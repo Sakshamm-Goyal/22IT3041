@@ -1,0 +1,146 @@
+{
+  "info": {
+    "name": "URL Shortener Microservice API",
+    "description": "Complete API collection for the TypeScript URL Shortener Microservice",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "health"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Short URL",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"https://www.google.com/search?q=very+long+search+query\",\n  \"validity\": 60,\n  \"shortcode\": \"test123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/shorturls",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "shorturls"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Short URL (Auto-generated shortcode)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"https://www.example.com/very-long-url\",\n  \"validity\": 30\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/shorturls",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "shorturls"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Statistics",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/shorturls/{{shortcode}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "shorturls", "{{shortcode}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Redirect to Original URL",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/{{shortcode}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{shortcode}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test Invalid URL",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"invalid-url\",\n  \"validity\": 30\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/shorturls",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "shorturls"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Test Duplicate Shortcode",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"url\": \"https://www.google.com\",\n  \"shortcode\": \"duplicate\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/shorturls",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "shorturls"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "shortcode",
+      "value": "test123"
+    }
+  ]
+}
