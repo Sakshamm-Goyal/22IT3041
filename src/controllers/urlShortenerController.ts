@@ -29,11 +29,8 @@ export class UrlShortenerController {
       if (errorMessage === 'Invalid URL format') {
         statusCode = 400;
         message = 'Invalid URL format. Please provide a valid HTTP or HTTPS URL';
-      } else if (errorMessage.includes('shortcode') || errorMessage.includes('Shortcode')) {
+      } else if (errorMessage.includes('shortcode')) {
         statusCode = 409;
-        message = errorMessage;
-      } else if (errorMessage.includes('Invalid shortcode format')) {
-        statusCode = 400;
         message = errorMessage;
       }
 

@@ -67,33 +67,16 @@ app.use(async (req, _res, next) => {
   }
 });
 
+// API routes
+app.use('/api', urlShortenerRoutes);
+
+// Root redirect route (for short URLs)
+app.get('/:shortcode', urlShortenerRoutes);
+
 // Serve frontend
 app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
-
-// API routes
-app.use('/api', urlShortenerRoutes);
-
-// Root redirect route (for short URLs) - must be after API routes
-// Exclude common paths that shouldn't be treated as shortcodes
-app.get('/:shortcode', (req, res, next) => {
-  const { shortcode } = req.params;
-  
-  // Exclude common paths that shouldn't be shortcodes
-  const excludedPaths = ['favicon.ico', 'robots.txt', 'sitemap.xml', 'service-worker.js', 'manifest.json'];
-  
-  if (shortcode && excludedPaths.includes(shortcode)) {
-    res.status(404).json({
-      success: false,
-      message: 'Not found'
-    });
-    return;
-  }
-  
-  // Continue to shortcode handler
-  next();
-}, urlShortenerRoutes);
 
 // 404 handler
 app.use('*', async (req, res) => {
